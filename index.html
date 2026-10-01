@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 1 Exam Practice</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23082A44'/%3E%3Cg stroke='%232DA8C8' stroke-width='4' stroke-linecap='round'%3E%3Cpath d='M32 22v20M32 32l-12 8M32 32l12 8'/%3E%3C/g%3E%3Ccircle cx='32' cy='19' r='7' fill='%2310E7D9'/%3E%3Ccircle cx='18' cy='44' r='6' fill='%23A7F5B8'/%3E%3Ccircle cx='46' cy='44' r='6' fill='%23A7F5B8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Ovo&display=swap" rel="stylesheet">
+<style>
+/* Layout: stat rail across the top, three tabs beneath it, one working card per tab. */
+:root{
+  --navy:#082A44; --navy2:#0d3a5c; --blue:#1D4C7A; --teal:#1781A1;
+  --aqua:#2DA8C8; --bright:#10E7D9; --green:#24D8A0; --mint:#A7F5B8;
+  --pale:#B1D2DB; --slate:#6F98B3;
+  --card:#ffffff; --ink:#0d2233; --muted:#5a7183; --line:#dfe9ee;
+  --good:#0f7a5a; --goodbg:#e6f7f0; --bad:#a3283c; --badbg:#fdeaee;
+  --warn:#8a6a10; --warnbg:#fff8e6;
+  --radius:13px; --shadow:0 4px 18px rgba(8,42,68,.13);
+  background:#082A44; color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Titillium Web',-apple-system,Segoe UI,Roboto,sans-serif;
+  color:var(--ink);
+  background:var(--navy);
+  background-image:linear-gradient(135deg,var(--navy) 0%,var(--blue) 45%,var(--teal) 75%,var(--aqua) 100%);
+  background-attachment:fixed; min-height:100vh; font-size:17px; line-height:1.55;
+}
+.wrap{max-width:940px;margin:0 auto;padding-block:22px 80px;padding-left:16px;padding-right:16px}
+
+h1.page{font-family:'Ovo',Georgia,serif;font-size:1.7rem;margin:0 0 4px;font-weight:400;color:#fff;text-wrap:balance}
+.sub{color:var(--mint);font-size:.8rem;letter-spacing:.11em;text-transform:uppercase;font-weight:600;
+  margin:0 0 18px;line-height:1.45;text-wrap:balance;max-width:46ch}
+
+/* ---------- stat rail ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
+.tile{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;min-width:0}
+.tile .big{font-family:'Ovo',Georgia,serif;font-size:1.65rem;line-height:1.1;color:var(--navy);font-variant-numeric:tabular-nums}
+.tile .lab{font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:3px;line-height:1.3}
+.tile.acc .big{color:var(--teal)}
+.tile.miss .big{color:var(--bad)}
+.tile.flag .big{color:var(--warn)}
+
+/* ---------- tabs ---------- */
+.tabbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tab{background:transparent;border:none;color:#dff0f7;font-family:inherit;font-size:1rem;font-weight:600;
+  padding:9px 16px;border-radius:10px 10px 0 0;cursor:pointer;border-bottom:3px solid transparent}
+.tab:hover{color:#fff;background:rgba(255,255,255,.1)}
+.tab[aria-selected="true"]{background:var(--card);color:var(--navy);border-bottom-color:var(--aqua)}
+.tabbar .spacer{flex:1}
+
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 22px;margin-bottom:16px}
+h2{font-family:'Ovo',Georgia,serif;font-weight:400;font-size:1.22rem;margin:0 0 8px;text-wrap:balance}
+p.lede{color:var(--muted);margin:0 0 14px}
+
+/* ---------- chips & toggles ---------- */
+.chiprow{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.chip{background:#f4f9fb;border:2px solid var(--line);color:var(--ink);font-family:inherit;font-size:.88rem;
+  font-weight:600;padding:6px 13px;border-radius:9px;cursor:pointer;white-space:nowrap}
+.chip:hover{border-color:var(--aqua)}
+.chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip.toggle[aria-pressed="true"]{background:var(--teal);border-color:var(--teal)}
+.chip:disabled{opacity:.42;cursor:not-allowed}
+.chiprow .div{width:1px;height:24px;background:var(--line);margin:0 4px}
+.chiprow .spacer{flex:1;min-width:0}
+.hint{color:var(--muted);font-size:.85rem}
+
+/* ---------- buttons ---------- */
+button{font-family:inherit;cursor:pointer;transition:.13s}
+.btn{background:var(--blue);color:#fff;padding:10px 19px;font-size:1rem;font-weight:600;border:2px solid transparent;border-radius:10px}
+.btn:hover{background:var(--navy2)}
+.btn:disabled{background:#b9c7d2;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--blue);border-color:var(--pale)}
+.btn.ghost:hover{border-color:var(--teal);background:#f3fafc}
+.btn.sm{padding:6px 13px;font-size:.88rem}
+.btn.tiny{padding:5px 11px;font-size:.82rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.row .spacer{flex:1;min-width:0}
+.reset{background:#fff;color:var(--blue);border:2px solid var(--pale);border-radius:10px;padding:6px 13px;font-size:.86rem;font-weight:600}
+.reset:hover{border-color:var(--teal)}
+
+/* ---------- question ---------- */
+.qhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:11px;margin-bottom:13px}
+.qhead h2{margin:0}
+.meta{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:11px}
+.stem{font-size:1.1rem;margin:0 0 16px}
+.choices{display:flex;flex-direction:column;gap:9px}
+.ch{display:flex;gap:12px;align-items:flex-start;border:2px solid var(--line);border-radius:11px;padding:12px 15px;
+  cursor:pointer;background:#fbfdfe;text-align:left;width:100%;font-size:1rem;line-height:1.5;color:var(--ink);font-family:inherit}
+.ch:hover:not(.locked){border-color:var(--aqua);background:#f2fbfd}
+.ch .mark{flex:none;width:25px;height:25px;border-radius:50%;border:2px solid var(--slate);display:grid;place-items:center;
+  font-size:.8rem;font-weight:700;color:var(--slate);background:#fff}
+.ch.sel{border-color:var(--teal);background:#eef8fb}
+.ch.sel .mark{background:var(--teal);border-color:var(--teal);color:#fff}
+.ch.locked{cursor:default}
+.ch.right{border-color:var(--good);background:var(--goodbg)}
+.ch.right .mark{background:var(--good);border-color:var(--good);color:#fff}
+.ch.wrong{border-color:var(--bad);background:var(--badbg)}
+.ch.wrong .mark{background:var(--bad);border-color:var(--bad);color:#fff}
+.why{margin:7px 0 0 37px;font-size:.93rem;color:#3d5464;border-left:3px solid var(--pale);padding-left:12px}
+.banner{border-radius:11px;padding:11px 15px;margin:0 0 13px;font-weight:600}
+.banner.ok{background:var(--goodbg);color:var(--good);border:2px solid #b7e6d4}
+.banner.no{background:var(--badbg);color:var(--bad);border:2px solid #f3c4ce}
+.review{background:#f2fafc;border:2px solid #d3e9f0;border-radius:11px;padding:10px 15px;margin-top:13px;font-size:.93rem;color:#2c4d5e}
+.review b{color:var(--navy)}
+.flagbtn{background:#fff;border:2px solid var(--line);border-radius:9px;font-size:.85rem;font-weight:600;
+  color:var(--muted);padding:5px 12px;display:inline-flex;gap:6px;align-items:center}
+.flagbtn:hover{border-color:var(--warn)}
+.flagbtn.on{background:var(--warnbg);border-color:#e8cf8c;color:var(--warn)}
+.bar{height:6px;background:#e3edf2;border-radius:99px;overflow:hidden;margin-bottom:14px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--aqua));border-radius:99px;transition:width .25s}
+
+/* ---------- decks ---------- */
+.deckgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:13px}
+.deck{border:1px solid var(--line);border-left:4px solid var(--aqua);border-radius:10px;padding:14px 16px;background:#fbfdfe;
+  text-align:left;font-family:inherit;cursor:pointer;width:100%}
+.deck:hover{border-left-color:var(--teal);background:#f2fafc}
+.deck h3{margin:0 0 5px;font-size:1.02rem;font-family:'Titillium Web',sans-serif;font-weight:700;color:var(--navy)}
+.deck p{margin:0 0 7px;font-size:.92rem;color:var(--muted);line-height:1.45}
+.deck .ct{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--teal)}
+.flip{border:2px solid var(--line);border-radius:12px;background:#fbfdfe;padding:26px 22px;min-height:168px;
+  display:grid;place-items:center;text-align:center;cursor:pointer}
+.flip:hover{border-color:var(--aqua)}
+.flip .side{font-size:1.18rem;line-height:1.5}
+.flip .term{font-family:'Ovo',Georgia,serif;font-size:1.7rem;color:var(--navy)}
+.flip .tap{margin-top:12px;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.autopsy{border:2px solid var(--line);border-radius:12px;background:#fbfdfe;padding:18px 20px}
+.autopsy .opt{background:var(--badbg);border:2px solid #f3c4ce;border-radius:10px;padding:11px 14px;margin:11px 0;font-size:1rem}
+
+/* ---------- review list ---------- */
+.rev{border:1px solid var(--line);border-radius:11px;padding:14px 16px;margin-bottom:11px;background:#fbfdfe}
+.rev.wrongq{border-left:4px solid var(--bad)}
+.rev.rightq{border-left:4px solid var(--good)}
+.rev .rstem{font-size:1rem;margin:7px 0 10px}
+.rev .line{font-size:.93rem;margin:4px 0;display:flex;gap:8px;align-items:flex-start}
+.rev .tagx{color:var(--bad);font-weight:700;flex:none}
+.rev .tagc{color:var(--good);font-weight:700;flex:none}
+.empty{text-align:center;padding:30px 16px;color:var(--muted)}
+.empty h2{color:var(--ink)}
+
+.msg{margin:11px 0 0;font-size:.93rem;font-weight:600;color:var(--bad)}
+.msg.warn{color:var(--warn)}
+footer.foot{text-align:center;color:#cfe6ef;font-size:.84rem;padding-top:14px}
+footer.foot p{margin:0 0 5px}
+footer.foot .credit{color:#eaf6fb;font-weight:600}
+footer.foot .cite{color:#a9cfe0;font-size:.78rem}
+/* ---------- phone ----------
+   Desktop keeps wrapping rows. On a phone the header, stat rail, tabs and nine filter
+   chips were pushing the question ~800px down the page, so here the chip rows and the
+   tab bar become single swipeable rows and the stat tiles go compact 2x2. */
+@media(max-width:620px){
+  body{font-size:16px}
+  .wrap{padding-block:14px 70px;padding-left:12px;padding-right:12px}
+  .card{padding:15px 14px}
+  .why{margin-left:0}
+  h1.page{font-size:1.4rem}
+  .sub{margin-bottom:13px;font-size:.75rem}
+
+  .stats{grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px}
+  .tile{padding:9px 11px}
+  .tile .big{font-size:1.25rem}
+  .tile .lab{font-size:.62rem;letter-spacing:.05em}
+
+  /* one swipeable row instead of three wrapped lines */
+  .tabbar,.chiprow{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-padding-left:12px}
+  .tabbar::-webkit-scrollbar,.chiprow::-webkit-scrollbar{display:none}
+  .tabbar{margin-bottom:11px}
+  .tabbar .spacer,.chiprow .spacer,.chiprow .div{display:none}
+  .tab,.chip,.reset{flex:none}
+
+  /* 44px tap targets */
+  .tab{min-height:44px;padding:10px 14px;font-size:.95rem;display:flex;align-items:center}
+  .chip{min-height:44px;display:inline-flex;align-items:center;font-size:.9rem}
+  .reset{min-height:44px;display:inline-flex;align-items:center}
+  .btn{min-height:46px}
+  .btn.sm,.btn.tiny{min-height:42px}
+  .flagbtn{min-height:42px}
+  .ch{padding:13px 14px}
+
+  .chiprow{margin-bottom:11px}
+  .stem{font-size:1.06rem}
+  .qhead{padding-bottom:9px;margin-bottom:10px}
+  /* actions sit side by side rather than stacking */
+  .row .btn{flex:1 1 auto;justify-content:center}
+}
+@media(max-width:380px){
+  .tile .big{font-size:1.15rem}
+  .wrap{padding-left:10px;padding-right:10px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 class="page">Unit 1 Exam Practice</h1>
+  <p class="sub">Atoms, Properties of Water, and Macromolecules &middot; Biology</p>
+
+  <div class="stats">
+    <div class="tile"><div class="big" id="tSeen">0 / 74</div><div class="lab">Questions seen</div></div>
+    <div class="tile acc"><div class="big" id="tAcc">0%</div><div class="lab">Accuracy</div></div>
+    <div class="tile miss"><div class="big" id="tMiss">0</div><div class="lab">In your missed pile</div></div>
+    <div class="tile flag"><div class="big" id="tFlag">0</div><div class="lab">Flagged for review</div></div>
+  </div>
+
+  <div class="tabbar" role="tablist">
+    <button class="tab" role="tab" id="tab-test"  aria-selected="true"  aria-controls="panel-test">Practice Test</button>
+    <button class="tab" role="tab" id="tab-tools" aria-selected="false" aria-controls="panel-tools">Additional Practice Tools</button>
+    <button class="tab" role="tab" id="tab-rev"   aria-selected="false" aria-controls="panel-rev">My Review</button>
+    <span class="spacer"></span>
+    <button class="reset" id="reset">Reset progress</button>
+  </div>
+  <p class="msg" id="msg" hidden></p>
+
+  <!-- ================= PRACTICE TEST ================= -->
+  <section id="panel-test" role="tabpanel" aria-labelledby="tab-test">
+    <div class="card">
+      <div class="chiprow" id="scoperow"></div>
+      <div class="chiprow" style="margin-bottom:0">
+        <button class="chip toggle" id="tUnseen" aria-pressed="true">Unseen first</button>
+        <button class="chip toggle" id="tShufQ"  aria-pressed="false">Shuffle questions</button>
+        <button class="chip toggle" id="tShufA"  aria-pressed="false">Shuffle answers</button>
+      </div>
+    </div>
+
+    <div class="card" id="qcard">
+      <div class="qhead">
+        <h2 id="qnum">Question 1</h2>
+        <span class="spacer" style="flex:1"></span>
+        <button class="flagbtn" id="flag"><span>&#9873;</span><span id="flagtxt">Flag</span></button>
+      </div>
+      <div class="bar"><i id="barfill" style="width:0%"></i></div>
+      <div class="meta" id="qmeta"></div>
+      <div id="banner"></div>
+      <div class="stem" id="stem"></div>
+      <div class="choices" id="choices"></div>
+      <div id="reviewline"></div>
+      <div class="row" style="margin-top:17px">
+        <button class="btn ghost sm" id="prev">&larr; Back</button>
+        <button class="btn" id="submit" disabled>Submit answer</button>
+        <button class="btn" id="next" hidden>Next &rarr;</button>
+      </div>
+    </div>
+    <div class="card" id="qempty" hidden>
+      <div class="empty"><h2>Nothing here yet</h2><p id="qemptytxt">No questions match this view.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= ADDITIONAL PRACTICE TOOLS ================= -->
+  <section id="panel-tools" role="tabpanel" aria-labelledby="tab-tools" hidden>
+    <div class="card">
+      <div class="chiprow" id="toolscope"></div>
+      <p class="hint" id="toolhint" style="margin:0">Section filter applies to Distractor Autopsy. Every deck shuffles each time you open it.</p>
+    </div>
+    <div class="card" id="decklist">
+      <h2>Know it backwards and forwards</h2>
+      <p class="lede">Picking the right answer is the easy half. These decks make you produce the reasoning instead: what a term actually means, why each wrong option fails, and which macromolecule you are looking at when nobody labels it.</p>
+      <div class="deckgrid" id="deckgrid"></div>
+    </div>
+    <div class="card" id="deckrun" hidden>
+      <div class="qhead">
+        <h2 id="deckname">Deck</h2>
+        <span class="spacer" style="flex:1"></span>
+        <button class="btn ghost tiny" id="deckclose">Back to decks</button>
+      </div>
+      <div class="bar"><i id="deckbar" style="width:0%"></i></div>
+      <div class="meta" id="deckmeta"></div>
+      <div id="deckbody"></div>
+      <div class="row" style="margin-top:16px">
+        <button class="btn ghost sm" id="deckprev">&larr; Back</button>
+        <button class="btn" id="decknext">Next &rarr;</button>
+        <span class="spacer"></span>
+        <button class="btn ghost sm" id="deckshuffle">Shuffle deck</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MY REVIEW ================= -->
+  <section id="panel-rev" role="tabpanel" aria-labelledby="tab-rev" hidden>
+    <div class="card">
+      <div class="chiprow" id="revrow" style="margin-bottom:0"></div>
+    </div>
+    <div id="revlist"></div>
+  </section>
+
+  <footer class="foot">
+    <p>Practice only. Your answers stay in this browser and are not sent anywhere.</p>
+    <p class="credit">Created using Claude by Madison Webb, 2026.</p>
+    <p class="cite">Anthropic. (2026). <i>Claude</i> [large language model]. https://claude.ai</p>
+  </footer>
+</div>
+
+<script src="vocab.js"></script>
+<script src="atoms.js"></script>
+<script src="water.js"></script>
+<script src="proteins.js"></script>
+<script src="carbs.js"></script>
+<script src="lipids.js"></script>
+<script src="tools.js"></script>
+<script>
+(function(){
+"use strict";
+const BANKS=[window.BANK_VOCAB,window.BANK_ATOMS,window.BANK_WATER,window.BANK_PROTEINS,window.BANK_CARBS,window.BANK_LIPIDS].filter(Boolean);
+const T=window.TOOLS||{reviewMap:{},vocabCards:[],rootCards:[],sortItems:[],sortChoices:[]};
+const SHORT={vocab:"Vocab & Roots",atoms:"Atoms",water:"Water",proteins:"Proteins",carbs:"Carbs",lipids:"Lipids"};
+const KEY="unit1-exam-practice-v2";
+const $=id=>document.getElementById(id);
+const LETTERS="ABCDEFGH";
+
+// ---------- every question, flat, with a stable key ----------
+const ALL=[];
+BANKS.forEach(b=>b.questions.forEach(q=>ALL.push({key:b.id+"#"+q.n,bank:b.id,bankTitle:b.title,q:q})));
+
+// ---------- storage (wrapped: private windows / blocked storage must not break the page) ----------
+let P={};
+function loadP(){try{const r=localStorage.getItem(KEY);P=r?JSON.parse(r):{}}catch(e){P={}}if(!P||typeof P!=="object")P={}}
+function saveP(){try{localStorage.setItem(KEY,JSON.stringify(P))}catch(e){}}
+function rec(k){return P[k]||(P[k]={})}
+loadP();
+
+function seenCount(){return ALL.filter(i=>P[i.key]&&P[i.key].seen).length}
+function answered(){return ALL.filter(i=>P[i.key]&&P[i.key].pick!=null)}
+function missedList(){return ALL.filter(i=>P[i.key]&&P[i.key].pick!=null&&!P[i.key].right)}
+function correctList(){return ALL.filter(i=>P[i.key]&&P[i.key].pick!=null&&P[i.key].right)}
+function flaggedList(){return ALL.filter(i=>P[i.key]&&P[i.key].flag)}
+
+function paintStats(){
+  const a=answered(), c=correctList().length;
+  $("tSeen").textContent=seenCount()+" / "+ALL.length;
+  $("tAcc").textContent=(a.length?Math.round(c/a.length*100):0)+"%";
+  $("tMiss").textContent=missedList().length;
+  $("tFlag").textContent=flaggedList().length;
+}
+
+function msg(text,kind){
+  const el=$("msg");
+  if(!text){el.hidden=true;el.textContent="";return}
+  el.textContent=text; el.className="msg"+(kind?" "+kind:""); el.hidden=false;
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+// Keep the page from lurching when content appears above where the student is looking.
+// Measures an element before and after a DOM change and scrolls by the difference, so
+// that element stays put on screen.
+function anchored(el,fn){
+  if(!el){fn();return}
+  const before=el.getBoundingClientRect().top;
+  fn();
+  const delta=el.getBoundingClientRect().top-before;
+  if(Math.abs(delta)>1) window.scrollBy(0,delta);
+}
+// Land every new question in the same place instead of wherever the last one ended.
+function scrollToQuestion(){
+  const card=$("qcard");
+  if(!card||card.hidden) {window.scrollTo(0,0);return}
+  const y=card.getBoundingClientRect().top+window.scrollY-10;
+  window.scrollTo(0,Math.max(0,y));
+}
+
+// ================= TABS =================
+const TABS=[["tab-test","panel-test"],["tab-tools","panel-tools"],["tab-rev","panel-rev"]];
+TABS.forEach(([t,p])=>{
+  $(t).onclick=()=>{
+    TABS.forEach(([t2,p2])=>{$(t2).setAttribute("aria-selected",String(t2===t));$(p2).hidden=(p2!==p)});
+    msg(null);
+    if(p==="panel-rev") paintReview();
+    if(p==="panel-tools") paintDecks();
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+});
+
+// ================= PRACTICE TEST =================
+let scope="mixed", order=[], idx=0, optOrder={};
+const SCOPES=[...BANKS.map(b=>({id:b.id,label:SHORT[b.id]||b.title})),{id:"mixed",label:"Mixed"},{id:"missed",label:"Missed only"},{id:"flagged",label:"⚑ Flagged"}];
+
+function paintScopeRow(){
+  $("scoperow").innerHTML=SCOPES.map(s=>{
+    let label=s.label, dis="";
+    if(s.id==="missed"){label="Missed only ("+missedList().length+")"; if(!missedList().length)dis=" disabled";}
+    if(s.id==="flagged"){label="⚑ Flagged ("+flaggedList().length+")"; if(!flaggedList().length)dis=" disabled";}
+    return `<button class="chip" data-s="${s.id}" aria-pressed="${scope===s.id}"${dis}>${label}</button>`;
+  }).join("");
+  [...$("scoperow").children].forEach(b=>{
+    b.onclick=()=>{scope=b.dataset.s; buildOrder(); paintScopeRow(); renderQ();};
+  });
+}
+
+function pool(){
+  if(scope==="missed")  return missedList().slice();
+  if(scope==="flagged") return flaggedList().slice();
+  if(scope==="mixed")   return ALL.slice();
+  return ALL.filter(i=>i.bank===scope);
+}
+
+function buildOrder(){
+  let list=pool();
+  if($("tShufQ").getAttribute("aria-pressed")==="true") shuffle(list);
+  if($("tUnseen").getAttribute("aria-pressed")==="true"){
+    const unseen=list.filter(i=>!(P[i.key]&&P[i.key].seen));
+    const rest  =list.filter(i=>  P[i.key]&&P[i.key].seen);
+    list=unseen.concat(rest);
+  }
+  order=list; idx=0; optOrder={};
+}
+
+function optionOrder(it){
+  if(optOrder[it.key]) return optOrder[it.key];
+  let o=it.q.opts.map((_,i)=>i);
+  if($("tShufA").getAttribute("aria-pressed")==="true") shuffle(o);
+  optOrder[it.key]=o; return o;
+}
+
+function renderQ(){
+  paintStats();
+  if(!order.length){
+    $("qcard").hidden=true; $("qempty").hidden=false;
+    $("qemptytxt").textContent = scope==="missed"
+      ? "No missed questions yet. Answer some on another filter and anything you get wrong lands here."
+      : scope==="flagged"
+      ? "Nothing flagged yet. Use the Flag button on a question to save it for later."
+      : "No questions in this section.";
+    return;
+  }
+  $("qcard").hidden=false; $("qempty").hidden=true;
+  if(idx>=order.length) idx=order.length-1;
+  const it=order[idx], q=it.q, r=rec(it.key);
+  r.seen=true; saveP();
+
+  $("qnum").textContent="Question "+(idx+1);
+  $("barfill").style.width=(idx/order.length*100)+"%";
+  $("qmeta").textContent=[it.bankTitle,q.topic,(idx+1)+" of "+order.length+" in this view"].join(" · ");
+  $("flag").classList.toggle("on",!!r.flag);
+  $("flagtxt").textContent=r.flag?"Flagged":"Flag";
+  $("stem").innerHTML=q.stem;
+  $("banner").innerHTML=""; $("reviewline").innerHTML="";
+
+  const oo=optionOrder(it);
+  $("choices").innerHTML=oo.map((oi,pos)=>
+    `<button class="ch" data-oi="${oi}"><span class="mark">${LETTERS[pos]}</span><span>${q.opts[oi][0]}</span></button>`).join("");
+
+  const done=r.pick!=null;
+  $("submit").hidden=done; $("next").hidden=!done;
+  $("submit").disabled=true;
+  $("prev").disabled=idx===0;
+  $("next").textContent = idx===order.length-1 ? "Start over →" : "Next →";
+
+  [...$("choices").children].forEach(btn=>{
+    btn.onclick=()=>{
+      if(rec(it.key).pick!=null) return;
+      [...$("choices").children].forEach(b=>b.classList.remove("sel"));
+      btn.classList.add("sel"); btn.dataset.chosen="1";
+      $("submit").disabled=false;
+    };
+  });
+
+  if(done) revealQ();
+}
+
+function revealQ(){
+  const it=order[idx], q=it.q, r=rec(it.key);
+  const right=!!r.right;
+  [...$("choices").children].forEach(btn=>{
+    const oi=+btn.dataset.oi, o=q.opts[oi];
+    btn.classList.add("locked"); btn.classList.remove("sel");
+    if(o[1]===1) btn.classList.add("right");
+    else if(oi===r.pick) btn.classList.add("wrong");
+    // Correct answer: keep the other explanations closed. Wrong answer: open every one.
+    if((!right||o[1]===1)&&o[2]){
+      const d=document.createElement("div"); d.className="why"; d.innerHTML=o[2];
+      btn.insertAdjacentElement("afterend",d);
+    }
+  });
+  $("banner").innerHTML = right
+    ? `<div class="banner ok">&#10003; That's right.</div>`
+    : `<div class="banner no">&#10007; Not quite. The correct answer is marked below, with the reason each other choice does not work.</div>`;
+  const where=T.reviewMap[q.topic];
+  $("reviewline").innerHTML = (where?`<div class="review"><b>Where to review this:</b> ${where}.</div>`:"")
+    + (q.note?`<div class="review"><b>Worth knowing:</b> ${q.note}</div>`:"");
+  $("submit").hidden=true; $("next").hidden=false;
+}
+
+$("submit").onclick=()=>{
+  const it=order[idx]; const r=rec(it.key);
+  if(r.pick!=null) return;
+  const sel=[...$("choices").children].find(b=>b.dataset.chosen==="1");
+  if(!sel) return;
+  r.pick=+sel.dataset.oi; r.right=it.q.opts[r.pick][1]===1; r.seen=true;
+  saveP();
+  // The banner and the explanations both appear above the chosen option, so hold it in place.
+  anchored(sel,()=>{ paintStats(); paintScopeRow(); revealQ(); });
+};
+$("next").onclick=()=>{
+  if(idx===order.length-1){buildOrder();renderQ();}
+  else {idx++; renderQ();}
+  scrollToQuestion();
+};
+$("prev").onclick=()=>{if(idx>0){idx--;renderQ();scrollToQuestion()}};
+$("flag").onclick=()=>{
+  const it=order[idx], r=rec(it.key);
+  r.flag=!r.flag; saveP();
+  $("flag").classList.toggle("on",r.flag); $("flagtxt").textContent=r.flag?"Flagged":"Flag";
+  paintStats(); paintScopeRow();
+};
+["tUnseen","tShufQ","tShufA"].forEach(id=>{
+  $(id).onclick=()=>{
+    const b=$(id); b.setAttribute("aria-pressed", b.getAttribute("aria-pressed")==="true"?"false":"true");
+    buildOrder(); renderQ();
+  };
+});
+
+// ================= DECKS =================
+let toolScope="mixed", deck=null, dIdx=0, dFlip=false, dPick=null;
+function paintToolScope(){
+  const opts=[...BANKS.map(b=>({id:b.id,label:SHORT[b.id]||b.title})),{id:"mixed",label:"Mixed"}];
+  $("toolscope").innerHTML=opts.map(o=>`<button class="chip" data-s="${o.id}" aria-pressed="${toolScope===o.id}">${o.label}</button>`).join("");
+  [...$("toolscope").querySelectorAll(".chip")].forEach(b=>{
+    b.onclick=()=>{toolScope=b.dataset.s;paintToolScope();paintDecks()};
+  });
+}
+function autopsyCards(){
+  const src = toolScope==="mixed" ? ALL : ALL.filter(i=>i.bank===toolScope);
+  const cards=[];
+  src.forEach(it=>it.q.opts.forEach((o,oi)=>{
+    if(o[1]!==1) cards.push({stem:it.q.stem,opt:o[0],why:o[2],topic:it.q.topic,sec:it.bankTitle});
+  }));
+  return cards;
+}
+function deckDefs(){
+  return [
+    {id:"vocab",  name:"Vocabulary Flashcards", desc:"The 20 terms from your vocab sheet. Say the definition out loud, then flip.", count:T.vocabCards.length, note:"whole unit"},
+    {id:"roots",  name:"Root Word Flashcards",  desc:"Every root word on the list. See the root, give the meaning, then flip.",   count:T.rootCards.length,  note:"whole unit"},
+    {id:"autopsy",name:"Distractor Autopsy",    desc:"One wrong answer at a time. Say why it fails, then check yourself.",        count:autopsyCards().length, note:""},
+    {id:"sort",   name:"Which Macromolecule?",  desc:"A clue with no label. Name the macromolecule. Immediate feedback.",         count:T.sortItems.length,  note:"whole unit"}
+  ];
+}
+function paintDecks(){
+  paintToolScope();
+  $("deckgrid").innerHTML=deckDefs().map(d=>
+    `<button class="deck" data-d="${d.id}"><h3>${d.name}</h3><p>${d.desc}</p>
+     <span class="ct">${d.count} cards${d.note?" · "+d.note:""}</span></button>`).join("");
+  [...$("deckgrid").children].forEach(b=>b.onclick=()=>openDeck(b.dataset.d));
+}
+function openDeck(id){
+  const def=deckDefs().find(d=>d.id===id);
+  let cards;
+  if(id==="vocab")   cards=T.vocabCards.map(c=>({a:c[0],b:c[1],kind:"flip"}));
+  if(id==="roots")   cards=T.rootCards.map(c=>({a:c[0],b:c[1],kind:"flip"}));
+  if(id==="autopsy") cards=autopsyCards().map(c=>({kind:"autopsy",...c}));
+  if(id==="sort")    cards=T.sortItems.map(c=>({kind:"sort",clue:c[0],ans:c[1]}));
+  shuffle(cards);
+  deck={id:id,name:def.name,cards:cards}; dIdx=0; dFlip=false; dPick=null;
+  $("decklist").hidden=true; $("deckrun").hidden=false;
+  $("deckname").textContent=def.name;
+  renderCard();
+}
+$("deckclose").onclick=()=>{$("deckrun").hidden=true;$("decklist").hidden=false;deck=null};
+$("deckshuffle").onclick=()=>{if(deck){shuffle(deck.cards);dIdx=0;dFlip=false;dPick=null;renderCard()}};
+$("decknext").onclick=()=>{if(!deck)return; dIdx=(dIdx+1)%deck.cards.length; dFlip=false; dPick=null; renderCard()};
+$("deckprev").onclick=()=>{if(!deck)return; dIdx=(dIdx-1+deck.cards.length)%deck.cards.length; dFlip=false; dPick=null; renderCard()};
+
+function renderCard(){
+  if(!deck||!deck.cards.length){$("deckbody").innerHTML=`<div class="empty"><h2>Nothing here yet</h2><p>No cards in this section.</p></div>`;return}
+  const c=deck.cards[dIdx];
+  $("deckbar").style.width=(dIdx/deck.cards.length*100)+"%";
+  $("deckmeta").textContent="Card "+(dIdx+1)+" of "+deck.cards.length;
+  if(c.kind==="flip"){
+    $("deckbody").innerHTML=`<div class="flip" id="flipcard">
+      <div><div class="${dFlip?"side":"term"}">${dFlip?c.b:c.a}</div>
+      <div class="tap">${dFlip?"Tap to see the term again":"Tap to flip"}</div></div></div>`;
+    $("flipcard").onclick=()=>{dFlip=!dFlip;renderCard()};
+  } else if(c.kind==="autopsy"){
+    $("deckmeta").textContent="Card "+(dIdx+1)+" of "+deck.cards.length+" · "+c.sec+" · "+c.topic;
+    $("deckbody").innerHTML=`<div class="autopsy">
+      <div style="font-size:.93rem;color:var(--muted)">${c.stem}</div>
+      <div class="opt">${c.opt}</div>
+      <div style="font-weight:600">Why does this one fail?</div>
+      ${dFlip?`<div class="why" style="margin-left:0;margin-top:10px">${c.why}</div>`
+             :`<button class="btn ghost sm" id="apShow" style="margin-top:11px">Check myself</button>`}
+    </div>`;
+    if(!dFlip) $("apShow").onclick=()=>{dFlip=true;renderCard()};
+  } else {
+    const picked=dPick!=null;
+    $("deckbody").innerHTML=`<div class="autopsy">
+      <div class="opt" style="background:#f4f9fb;border-color:var(--line)">${c.clue}</div>
+      <div class="choices">${T.sortChoices.map(s=>{
+        let cls="ch";
+        if(picked){cls+=" locked"; if(s===c.ans)cls+=" right"; else if(s===dPick)cls+=" wrong";}
+        return `<button class="${cls}" data-v="${s}"><span class="mark">${s[0]}</span><span>${s}</span></button>`;
+      }).join("")}</div>
+      ${picked?`<div class="banner ${dPick===c.ans?"ok":"no"}" style="margin-top:13px;margin-bottom:0">${dPick===c.ans?"&#10003; That's right.":"&#10007; Not quite. It is a "+c.ans.toLowerCase()+"."}</div>`:""}
+    </div>`;
+    if(!picked) [...$("deckbody").querySelectorAll(".ch")].forEach(b=>b.onclick=()=>{dPick=b.dataset.v;renderCard()});
+  }
+}
+
+// ================= MY REVIEW =================
+let revView="missed";
+function paintRevRow(){
+  const opts=[
+    {id:"missed",  label:"Missed ("+missedList().length+")"},
+    {id:"flagged", label:"⚑ Flagged ("+flaggedList().length+")"},
+    {id:"all",     label:"All answered ("+answered().length+")"},
+    {id:"correct", label:"Correct ("+correctList().length+")"}
+  ];
+  $("revrow").innerHTML=opts.map(o=>`<button class="chip" data-v="${o.id}" aria-pressed="${revView===o.id}">${o.label}</button>`).join("");
+  [...$("revrow").children].forEach(b=>b.onclick=()=>{revView=b.dataset.v;paintReview()});
+}
+function paintReview(){
+  paintStats(); paintRevRow();
+  let list = revView==="missed"?missedList() : revView==="flagged"?flaggedList()
+           : revView==="correct"?correctList() : answered();
+  if(!list.length){
+    $("revlist").innerHTML=`<div class="card"><div class="empty">
+      <h2>Nothing here yet</h2>
+      <p>${revView==="missed"?"No missed questions in this view. Nice."
+          :revView==="flagged"?"You have not flagged anything yet. Use the Flag button on a question to save it here."
+          :revView==="correct"?"Nothing answered correctly yet."
+          :"You have not answered anything yet."}</p>
+      <button class="btn sm" id="gotest">Go to the practice test</button></div></div>`;
+    $("gotest").onclick=()=>$("tab-test").click();
+    return;
+  }
+  $("revlist").innerHTML=`<div class="card">`+list.map(it=>{
+    const r=P[it.key]||{}, q=it.q;
+    const ci=q.opts.findIndex(o=>o[1]===1);
+    const answeredQ=r.pick!=null;
+    const where=T.reviewMap[q.topic];
+    return `<div class="rev ${answeredQ&&!r.right?"wrongq":answeredQ?"rightq":""}">
+      <div class="meta">${it.bankTitle} · ${q.topic}${r.flag?" · ⚑ flagged":""}</div>
+      <div class="rstem">${q.stem}</div>
+      ${answeredQ&&!r.right?`<div class="line"><span class="tagx">&#10007;</span><span>You chose: ${q.opts[r.pick][0]}<div class="why" style="margin-left:0">${q.opts[r.pick][2]}</div></span></div>`:""}
+      ${answeredQ?`<div class="line"><span class="tagc">&#10003;</span><span>Correct answer: ${q.opts[ci][0]}<div class="why" style="margin-left:0">${q.opts[ci][2]}</div></span></div>`
+                 :`<div class="line"><span>Not answered yet.</span></div>`}
+      ${where?`<div class="review" style="margin-top:10px"><b>Where to review this:</b> ${where}.</div>`:""}
+    </div>`;
+  }).join("")+`</div>`;
+}
+
+// ================= RESET =================
+// Two-step confirm: confirm() is blocked in some embedded viewers, so the page handles it itself.
+let armed=false, armTimer=null;
+$("reset").onclick=()=>{
+  const b=$("reset");
+  if(!armed){
+    armed=true; b.textContent="Click again to reset";
+    msg("This erases everything you have answered, missed, and flagged, in this browser only.","warn");
+    clearTimeout(armTimer);
+    armTimer=setTimeout(()=>{armed=false;b.textContent="Reset progress";msg(null)},6000);
+    return;
+  }
+  clearTimeout(armTimer); armed=false; b.textContent="Reset progress";
+  P={}; try{localStorage.removeItem(KEY)}catch(e){}
+  buildOrder(); paintScopeRow(); renderQ(); paintStats(); paintRevRow();
+  msg("Progress reset.","warn"); setTimeout(()=>msg(null),2500);
+};
+
+document.addEventListener("keydown",e=>{
+  if($("panel-test").hidden||e.key!=="Enter") return;
+  if(!$("next").hidden) $("next").click();
+  else if(!$("submit").disabled) $("submit").click();
+});
+
+// ---------- boot ----------
+paintStats(); paintScopeRow(); buildOrder(); renderQ(); paintDecks(); paintRevRow();
+})();
+</script>
+</body>
+</html>
