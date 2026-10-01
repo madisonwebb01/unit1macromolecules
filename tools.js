@@ -20,6 +20,7 @@ window.TOOLS = {
     "Monomers and bonds": "Proteins notes",
     "Protein structure": "Proteins notes, the four levels of structure",
     "Protein functions": "Functions of Proteins notes",
+    "Enzymes": "Functions of Proteins notes, the digestive enzymes section",
     "Monomers and polymers": "Carbohydrates notes",
     "Chemical reactions": "Carbohydrates notes, dehydration synthesis and hydrolysis",
     "Polysaccharides": "Carbohydrates notes, starch, glycogen and cellulose",

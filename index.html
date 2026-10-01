@@ -87,6 +87,11 @@ button{font-family:inherit;cursor:pointer;transition:.13s}
 .qhead h2{margin:0}
 .meta{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:11px}
 .stem{font-size:1.1rem;margin:0 0 16px}
+/* Figures size to their natural width so a small photo is never upscaled into mush. */
+figure.qfig{margin:0 0 16px;border:1px solid var(--line);border-radius:11px;background:#fff;
+  padding:11px 13px;max-width:640px}
+figure.qfig img{display:block;max-width:100%;height:auto;margin:0 auto;border-radius:6px}
+figure.qfig figcaption{margin-top:8px;font-size:.85rem;color:var(--muted);text-align:center;line-height:1.4}
 .choices{display:flex;flex-direction:column;gap:9px}
 .ch{display:flex;gap:12px;align-items:flex-start;border:2px solid var(--line);border-radius:11px;padding:12px 15px;
   cursor:pointer;background:#fbfdfe;text-align:left;width:100%;font-size:1rem;line-height:1.5;color:var(--ink);font-family:inherit}
@@ -238,6 +243,7 @@ footer.foot .cite{color:#a9cfe0;font-size:.78rem}
       <div class="meta" id="qmeta"></div>
       <div id="banner"></div>
       <div class="stem" id="stem"></div>
+      <div id="qfig"></div>
       <div class="choices" id="choices"></div>
       <div id="reviewline"></div>
       <div class="row" style="margin-top:17px">
@@ -344,6 +350,17 @@ function msg(text,kind){
 }
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 
+// A photo has a fixed number of pixels. Stretching it past that only makes it blurry,
+// so raster figures stop at their natural width. SVG scales losslessly and is left alone.
+function capFigure(host){
+  if(!host) return;
+  host.querySelectorAll("img").forEach(img=>{
+    if(/\.svg($|\?)/i.test(img.getAttribute("src")||"")) return;
+    const cap=()=>{ if(img.naturalWidth) img.style.maxWidth=Math.min(img.naturalWidth,640)+"px"; };
+    if(img.complete) cap(); else img.addEventListener("load",cap,{once:true});
+  });
+}
+
 // Keep the page from lurching when content appears above where the student is looking.
 // Measures an element before and after a DOM change and scrolls by the difference, so
 // that element stays put on screen.
@@ -437,6 +454,11 @@ function renderQ(){
   $("flag").classList.toggle("on",!!r.flag);
   $("flagtxt").textContent=r.flag?"Flagged":"Flag";
   $("stem").innerHTML=q.stem;
+  $("qfig").innerHTML = q.fig
+    ? `<figure class="qfig"><img src="${q.fig}" alt="${(q.figcap||q.topic).replace(/"/g,"&quot;")}">`
+      + (q.figcap?`<figcaption>${q.figcap}</figcaption>`:"") + `</figure>`
+    : "";
+  capFigure($("qfig"));
   $("banner").innerHTML=""; $("reviewline").innerHTML="";
 
   const oo=optionOrder(it);
@@ -633,12 +655,14 @@ function paintReview(){
     return `<div class="rev ${answeredQ&&!r.right?"wrongq":answeredQ?"rightq":""}">
       <div class="meta">${it.bankTitle} · ${q.topic}${r.flag?" · ⚑ flagged":""}</div>
       <div class="rstem">${q.stem}</div>
+      ${q.fig?`<figure class="qfig"><img src="${q.fig}" alt="${(q.figcap||q.topic).replace(/"/g,'&quot;')}" loading="lazy">${q.figcap?`<figcaption>${q.figcap}</figcaption>`:""}</figure>`:""}
       ${answeredQ&&!r.right?`<div class="line"><span class="tagx">&#10007;</span><span>You chose: ${q.opts[r.pick][0]}<div class="why" style="margin-left:0">${q.opts[r.pick][2]}</div></span></div>`:""}
       ${answeredQ?`<div class="line"><span class="tagc">&#10003;</span><span>Correct answer: ${q.opts[ci][0]}<div class="why" style="margin-left:0">${q.opts[ci][2]}</div></span></div>`
                  :`<div class="line"><span>Not answered yet.</span></div>`}
       ${where?`<div class="review" style="margin-top:10px"><b>Where to review this:</b> ${where}.</div>`:""}
     </div>`;
   }).join("")+`</div>`;
+  capFigure($("revlist"));
 }
 
 // ================= RESET =================

@@ -6,14 +6,14 @@ A self-contained practice quiz bank for 9th grade Biology. Students answer first
 find out whether they were right and why each other choice does not work. Nothing is
 submitted anywhere and no account is needed.
 
-**74 questions in 6 sections**
+**77 questions in 6 sections**
 
 | Section | Questions | Built from |
 |---|---|---|
 | Vocabulary & Root Words | 12 | Unit 1 Root Words & Vocab sheet |
 | Atoms & Molecules | 10 | Marshmallow Molecules worksheet |
 | Properties of Water | 14 | Properties of Water notes, 7-station Water Lab |
-| Proteins | 14 | Proteins notes, Functions of Proteins notes |
+| Proteins | 17 | Proteins notes, Functions of Proteins notes |
 | Carbohydrates | 12 | Carbohydrates notes, Sugar Lab |
 | Lipids | 12 | Lipids notes |
 
@@ -26,7 +26,7 @@ the same way Quiz 1 uses them.
 
 ## Putting it on GitHub Pages
 
-You need all 9 files listed below, and they all sit at the TOP level of the repository.
+You need all 15 files listed below, and they all sit at the TOP level of the repository.
 No build step, no dependencies, nothing to install.
 
 ```
@@ -34,7 +34,13 @@ index.html     the whole app
 vocab.js  atoms.js  water.js  proteins.js  carbs.js  lipids.js      the 6 question banks
 tools.js       flashcard decks, the sorting drill, review sources
 README.md      this file (optional on the site, but worth keeping)
+
+alpine-lake.png  glass-of-water.png  water-striders.png             question photos
+starch-glycogen.svg  sequence-change.svg  enzyme-rate.svg           question diagrams
 ```
+
+The six image files must be uploaded too. A question that references a missing image
+shows a broken-image icon rather than failing loudly, so it is easy to miss.
 
 1. On github.com click **New repository**. Give it a short name with no spaces, for
    example `unit1practice`, since the name becomes part of the web address.

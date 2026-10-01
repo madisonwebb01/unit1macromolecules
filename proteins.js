@@ -87,6 +87,8 @@ window.BANK_PROTEINS = {
   {
     n: 9, topic: "Protein structure",
     stem: "A gene is changed so that one amino acid in a protein's chain is swapped for a different one.<br><b>Which level of structure is affected first?</b>",
+    fig: "sequence-change.svg",
+    figcap: "A single swap early in the chain can change how the whole protein folds.",
     opts: [
       ["Primary structure", 1, "Correct. Genes code for the amino acid sequence, which is the primary structure. Because the sequence determines the final shape, the other levels can be affected too, but primary changes first."],
       ["Secondary structure", 0, "Secondary structure can certainly change as a result, but only because the sequence changed first."],
@@ -142,6 +144,39 @@ window.BANK_PROTEINS = {
       ["Because the levels of protein structure give them a huge variety of shapes, and different shapes do different jobs", 1, "Correct. Proteins are incredibly varied in shape because of the levels of structure, and having many different shapes lets them carry out many different functions."],
       ["Because they all contain the same sequence of amino acids", 0, "The opposite is true. Different sequences are exactly what create different proteins."],
       ["Because they dissolve easily in water", 0, "Solubility varies between proteins and is not the source of their variety of functions."]
+    ]
+  }
+  ,
+  {
+    n: 15, topic: "Protein structure",
+    stem: "In a protein's <b>secondary structure</b>, the alpha helices and beta pleated sheets are held in shape by:",
+    opts: [
+      ["Peptide bonds between the R-groups of nearby amino acids", 0, "Peptide bonds join amino acids along the backbone, not R-group to R-group, and they build the chain rather than hold its coils in shape."],
+      ["Hydrogen bonds between the amino group of one amino acid and the carboxyl group of another", 1, "Correct. Those hydrogen bonds along the backbone are what let the chain coil into an alpha helix or fold into a beta pleated sheet."],
+      ["Disulfide bridges between nearby cysteines", 0, "Disulfide bridges help hold tertiary structure, the 3D folding of the whole chain."],
+      ["Ionic bonds between two separate polypeptide chains", 0, "Bonds between separate chains belong to quaternary structure."]
+    ]
+  },
+  {
+    n: 16, topic: "Enzymes",
+    stem: "The graph shows how much product forms in the same reaction with an enzyme and without one.<br><b>What does the graph tell you about what enzymes do?</b>",
+    fig: "enzyme-rate.svg",
+    figcap: "Same reaction, run twice. The only difference is the enzyme.",
+    opts: [
+      ["Enzymes increase the total amount of product the reaction can make", 0, "Check the right-hand end of the graph: both lines finish at the same height. The enzyme did not change how much product formed."],
+      ["Enzymes speed up how quickly the reaction gets to that product", 1, "Correct. The solid line climbs much faster early on, so the same amount of product is reached in less time."],
+      ["Enzymes slow the reaction down so the cell does not use up resources too quickly", 0, "The line with the enzyme climbs above the other one almost immediately and stays higher until the two meet at the end, so the reaction ran faster, not slower."],
+      ["Enzymes have no real effect on the rate of a reaction", 0, "The two lines are far apart in the middle of the graph, which is exactly what a difference in rate looks like."]
+    ]
+  },
+  {
+    n: 17, topic: "Enzymes",
+    stem: "Amylase, pepsin, and lactase all work in the digestive system.<br><b>What do these enzymes do there?</b>",
+    opts: [
+      ["They break large food molecules down into pieces small enough to be absorbed", 1, "Correct. Digestive enzymes break food molecules down so they can be absorbed in the small intestine."],
+      ["They build large food molecules out of smaller ones", 0, "That is the opposite direction, since digestion breaks molecules apart. Amylase and lactase are even named for what they break down, starch and lactose."],
+      ["They carry food molecules around the body in the bloodstream", 0, "Moving substances in the blood is the job of transport proteins such as hemoglobin."],
+      ["They store energy in the liver until the body needs it", 0, "That is glycogen, a carbohydrate, not an enzyme."]
     ]
   }
 ]};
